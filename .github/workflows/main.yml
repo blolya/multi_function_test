@@ -21,22 +21,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: function1 
-          source: ./function1/index.mjs
-
-  deploy_source3:
-    name: deploy lambda from source r
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout source code
-        uses: actions/checkout@v1
-      - name: default deploy
-        uses: appleboy/lambda-action@master
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: ${{ secrets.AWS_REGION }}
-          function_name: function1 
-          source: ./function1/index2.mjs
+          source: ./function1/*
 
   deploy_source2:
     name: deploy lambda from source q
@@ -51,4 +36,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: function2 
-          source: ./function2/index.mjs
+          source: ./function2/*
