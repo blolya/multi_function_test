@@ -21,7 +21,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: function1 
-          source: ./function1/
+          source: ['./function1/index.mjs','./function1/index2.mjs']
 
   deploy_source2:
     name: deploy lambda from source
@@ -36,4 +36,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: function2 
-          source: ./function2/
+          source: ['./function2/index.mjs','./function2/index2.mjs']
