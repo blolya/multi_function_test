@@ -23,7 +23,7 @@ jobs:
           function_name: function1 
           source: ./function1/index.mjs
 
-  deploy_source1:
+  deploy_source3:
     name: deploy lambda from source r
     runs-on: ubuntu-latest
     steps:
