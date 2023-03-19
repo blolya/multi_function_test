@@ -19,10 +19,6 @@ jobs:
         filters: |
           function:
             - 'function1/**'
-    # run only if 'function' files were changed
-    - name: function1 tests
-      if: steps.filter.outputs.function == 'true'
-      run: echo "Function file"
 
   deploy_source1:
     name: deploy lambda from source n
