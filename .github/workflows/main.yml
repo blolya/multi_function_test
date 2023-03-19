@@ -7,10 +7,28 @@ on:
       - master
 jobs:
 
+  paths-filter:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.filter.outputs.function }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          function:
+            - 'function1/**'
+    # run only if 'function' files were changed
+    - name: function1 tests
+      if: steps.filter.outputs.function == 'true'
+      run: echo "Function file"
 
   deploy_source1:
     name: deploy lambda from source n
     runs-on: ubuntu-latest
+    needs: paths-filter
+    if: needs.paths-filter.outputs.output1 == 'true'
     steps:
       - name: checkout source code
         uses: actions/checkout@v1
