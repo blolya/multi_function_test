@@ -24,15 +24,12 @@ jobs:
             - 'function2/**'
 
   deploy_source1:
-    name: deploy lambda from source n
-    runs-on: ubuntu-latest
     needs: paths-filter
-    if: needs.paths-filter.outputs.output1 == 'true'
+    if: ${{ needs.paths-filter.outputs.output1 == 'true' }}
+    runs-on: ubuntu-latest
     steps:
-      - name: checkout source code
-        uses: actions/checkout@v1
-      - name: default deploy
-        uses: appleboy/lambda-action@master
+      - uses: actions/checkout@v1
+      - uses: appleboy/lambda-action@master
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -41,15 +38,12 @@ jobs:
           source: ./function1/*
 
   deploy_source2:
-    name: deploy lambda from source q
-    runs-on: ubuntu-latest
     needs: paths-filter
-    if: needs.paths-filter.outputs.output2 == 'true'
+    if: ${{ needs.paths-filter.outputs.output2 == 'true' }}
+    runs-on: ubuntu-latest
     steps:
-      - name: checkout source code
-        uses: actions/checkout@v1
-      - name: default deploy
-        uses: appleboy/lambda-action@master
+      - uses: actions/checkout@v1
+      - uses: appleboy/lambda-action@master
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
