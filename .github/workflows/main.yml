@@ -1,34 +1,32 @@
 name: deploy to lambda
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
   push:
     branches:
       - master
 jobs:
 
-  paths-filter:
+  changes:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.filter.outputs.function1 }}
-      output2: ${{ steps.filter.outputs.function2 }}
+      function1: ${{ steps.filter.outputs.function1 }}
+      function2: ${{ steps.filter.outputs.function2 }}
     steps:
-    - uses: actions/checkout@v2
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          function1:
-            - 'function1/**'
-          function2:
-            - 'function2/**'
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            function1:
+              - 'function1/**'
+            function2:
+              - 'function2/**'
 
-  deploy_source1:
-    needs: paths-filter
-    if: ${{ needs.paths-filter.outputs.output1 == 'true' }}
+  function1:
+    needs: changes
+    if: ${{ needs.changes.outputs.function1 == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - uses: appleboy/lambda-action@master
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -37,12 +35,13 @@ jobs:
           function_name: function1 
           source: ./function1/*
 
-  deploy_source2:
-    needs: paths-filter
-    if: ${{ needs.paths-filter.outputs.output2 == 'true' }}
+
+  function2:
+    needs: changes
+    if: ${{ needs.changes.outputs.function2 == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - uses: appleboy/lambda-action@master
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
